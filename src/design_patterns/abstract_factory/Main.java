@@ -1,23 +1,29 @@
 package design_patterns.abstract_factory;
 
 /**
- * Created by CC on 25.09.2017.
+ * Created by CC on 17.12.2017.
  */
 public class Main {
 
-    public static AddressFactory factory;
+    private static TransportFactory factory;
 
     public static void main(String[] args) {
 
         boolean a = true;
 
         if (a) {
-            factory = new USAddressFactory();
+            factory = new RussionFactory();
         } else {
-            factory = new FrenchAddressFactory();
+            factory = new USAFactory();
         }
 
-        System.out.println(factory.createAddress().getFullAddress());
-        System.out.println(factory.createPhoneNumber().getCountryCode());
+
+        factory.createAircraft();
+        factory.createCar();
+
+
+
+
+
     }
 }
