@@ -167,6 +167,7 @@ catch выполняется блок finally, после которого, в свою
 */
 
 
+import java.io.IOException;
 
 public class Exceptions {
 
@@ -184,7 +185,7 @@ public class Exceptions {
 
         try {
             if (a < 1) {
-                throw new Exception();
+                throw new IOException();
             }
         } catch (Exception e) {
             System.out.println("exception occurred");

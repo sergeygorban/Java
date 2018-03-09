@@ -1,7 +1,6 @@
-package lambdaExpressions_and_stream_31;
+package LambdaExpressions_31;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import static java.util.stream.Collectors.toList;
 /**

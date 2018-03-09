@@ -1,7 +1,7 @@
 package dataStructures_20;
 
 
-/* List - список.
+/* ListMy - список.
 
 Список применяется, когда имеет значение
 порядок следования. Коллекции, которые учитывают индекс (позицию).
@@ -9,5 +9,5 @@ package dataStructures_20;
 могут ссылаться на один объект.
 */
 
-public class List {
+public class ListMy {
 }
