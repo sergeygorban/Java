@@ -1,4 +1,4 @@
-package LambdaExpressions_31;
+package lambdaExpressions_and_Stream_31;
 
 import java.util.ArrayList;
 import java.util.List;
