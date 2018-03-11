@@ -1,6 +1,4 @@
-package LambdaExpressions_31.predicateMy;
-
-import LambdaExpressions_31.Apple;
+package LambdaExpressions_31.predicate;
 
 /**
  * Created by CC on 09.03.2018.

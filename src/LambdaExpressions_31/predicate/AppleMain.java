@@ -1,10 +1,13 @@
-package LambdaExpressions_31;
+package LambdaExpressions_31.predicate;
 
 import LambdaExpressions_31.formatter.AppleSimpleFormatter;
-import LambdaExpressions_31.predicateMy.*;
+import LambdaExpressions_31.predicate.*;
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
+
 import static java.util.stream.Collectors.toList;
 /**
  * Created by CC on 09.03.2018.
@@ -60,6 +63,40 @@ public class AppleMain {
         //Formatter
         System.out.println();
         Apple.prettyPrintApple(listApples, new AppleSimpleFormatter());
+
+        //Creating Object. Default Constructor
+        Supplier<Apple> c1 = Apple::new;
+        Apple a1 = c1.get();
+        System.out.println(a1.getColor());
+
+        Supplier<Apple> c2 = () -> new Apple();
+        Apple a2 = c1.get();
+
+        // Constructor with signature
+        Function<Integer,Apple> c3 = Apple::new;
+        Apple a3 = c3.apply(100);
+        System.out.println(a3.getWeight());
+
+        Function<Integer,Apple> c4 = (weight) -> new Apple(weight);
+        Apple a4 = c4.apply(100);
+        System.out.println(a4.getWeight());
+
+        BiFunction<String, Integer, Apple> c5 = Apple::new;
+        Apple a5 = c5.apply("red", 100);
+        System.out.println(a5);
+
+        BiFunction<String, Integer, Apple> c6 = (color, weight) -> new Apple(color, weight);
+        Apple a6 = c5.apply("red-red", 66);
+        System.out.println(a6);
+
+        //Создание нескольких объектов
+        List<Integer> weight = Arrays.asList(1, 2, 3, 466, 77);
+        List<Apple> list = Apple.map(weight,Apple::new);
+        System.out.println(list);
+
+
+
+
 
     }
 
