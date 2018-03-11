@@ -1,5 +1,7 @@
 package LambdaExpressions_31.consumer;
 
+import LambdaExpressions_31.ConsumerMy;
+
 import java.util.Arrays;
 
 /**
@@ -9,7 +11,7 @@ public class ConsumerMain {
 
     public static void main(String[] args) {
 
-        ConsumerMy.forEach(Arrays.asList(1,2,3,4,5), (Integer i) -> System.out.println(i));
+        ConsumerMy.forEach(Arrays.asList(1, 2, 3, 4, 5), (Integer i) -> System.out.println(i));
 
     }
 }
