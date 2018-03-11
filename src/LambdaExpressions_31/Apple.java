@@ -1,7 +1,11 @@
 package LambdaExpressions_31;
 
+import LambdaExpressions_31.formatter.AppleFormatter;
+import LambdaExpressions_31.predicateMy.ApplePredicate;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 /**
  * Created by CC on 09.03.2018.
@@ -37,6 +41,25 @@ public class Apple {
         }
 
         return result;
+    }
+
+    // The universal method
+    public static <T> List<T> filterMy(List<T> list, Predicate<T> p) {
+        List<T> results = new ArrayList<>();
+        for (T e: list) {
+            if (p.test(e)) {
+                results.add(e);
+            }
+        }
+        return results;
+    }
+
+    public static void prettyPrintApple(List<Apple> inventory, AppleFormatter formatter){
+
+        for(Apple apple: inventory){
+            String output = formatter.accept(apple);
+            System.out.println(output);
+        }
     }
 
     @Override
