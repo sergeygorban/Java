@@ -1,5 +1,7 @@
 package LambdaExpressions_31.consumer;
 
+import LambdaExpressions_31.ConsumerMy;
+
 import java.util.Arrays;
 
 /**
