@@ -41,9 +41,7 @@ functional interface.
 */
 
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.*;
 
 public class LambdaExpressions {
 
@@ -83,9 +81,6 @@ public class LambdaExpressions {
         Collections.sort(arrayList,(String a, String b) -> a.length() - b.length());
         System.out.println(arrayList);
 
-        Collections.sort(arrayList,new Comparatori().comparator);
-        System.out.println(arrayList);
-
         /* операция :: отделяет имя метода от имени класса или объекта.*/
         Collections.sort(arrayList,String::compareToIgnoreCase);
         System.out.println(arrayList);
@@ -103,5 +98,12 @@ public class LambdaExpressions {
         /* Связывание компараторов */
         Collections.sort(arrayList1, Comparator.comparing(LambdaExpressions::getName).thenComparing(LambdaExpressions::getFirstName));
         System.out.println(arrayList1);
+
+
+        List<String> str = Arrays.asList("a", "b", "A", "B");
+        str.sort((s1, s2) -> s1.compareToIgnoreCase(s2));
+
+        List<String> str1 = Arrays.asList("a","b","A","B");
+        str.sort(String::compareToIgnoreCase);
     }
 }
