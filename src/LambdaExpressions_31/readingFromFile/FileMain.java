@@ -12,7 +12,8 @@ public class FileMain {
 
     public static void main(String[] args) throws IOException {
 
-        String file = "readingFromFile.txt";
+        String file = "readingFromFile" +
+                ".txt";
 
 
         System.out.println(MyFile.processFile((BufferedReader br) -> br.readLine(), file));
