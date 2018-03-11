@@ -9,7 +9,7 @@ public class ConsumerMain {
 
     public static void main(String[] args) {
 
-        ConsumerMy.forEach(Arrays.asList(1, 2, 3, 4, 5), (Integer i) -> System.out.println(i));
+        ConsMy.forEach(Arrays.asList(1, 2, 3, 4, 5), (Integer i) -> System.out.println(i));
 
     }
 }
