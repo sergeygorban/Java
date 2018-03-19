@@ -37,11 +37,54 @@ public class Big {
 
         BigDecimal bigDecimal5 = new BigDecimal(a,new MathContext(10,RoundingMode.DOWN)).setScale(3,BigDecimal.ROUND_UP);
         System.out.println(bigDecimal5);
+        System.out.println();
 
+        //http://pr0java.blogspot.com/2015/05/biginteger-bigdecimal_70.html
+        double c1 = -23.3335;
+        double c2 = 23.3335;
 
-        double c = -23.2242;
-        BigDecimal bigDecimal6 = new BigDecimal(c).setScale(3,BigDecimal.ROUND_FLOOR);
+        BigDecimal bigDecimal6 = new BigDecimal(c1).setScale(3,BigDecimal.ROUND_CEILING);
+        BigDecimal bigDecimal7 = new BigDecimal(c2).setScale(3,BigDecimal.ROUND_CEILING);
+
         System.out.println(bigDecimal6);
+        System.out.println(bigDecimal7);
+        System.out.println();
+
+        BigDecimal bigDecimal8 = new BigDecimal(c1).setScale(3,BigDecimal.ROUND_DOWN);
+        BigDecimal bigDecimal9 = new BigDecimal(c2).setScale(3,BigDecimal.ROUND_DOWN);
+
+        System.out.println(bigDecimal8);
+        System.out.println(bigDecimal9);
+        System.out.println();
+
+        BigDecimal bigDecimal10 = new BigDecimal(c1).setScale(3,BigDecimal.ROUND_UP);
+        BigDecimal bigDecimal11 = new BigDecimal(c2).setScale(3,BigDecimal.ROUND_UP);
+
+        System.out.println(bigDecimal10);
+        System.out.println(bigDecimal11);
+        System.out.println();
+
+        BigDecimal bigDecimal12 = new BigDecimal(c1).setScale(3,BigDecimal.ROUND_FLOOR);
+        BigDecimal bigDecimal13 = new BigDecimal(c2).setScale(3,BigDecimal.ROUND_FLOOR);
+
+        System.out.println(bigDecimal12);
+        System.out.println(bigDecimal13);
+        System.out.println();
+
+        BigDecimal bigDecimal14 = new BigDecimal(c1).setScale(3,BigDecimal.ROUND_HALF_UP);
+        BigDecimal bigDecimal15 = new BigDecimal(c2).setScale(3,BigDecimal.ROUND_HALF_UP);
+
+        System.out.println(bigDecimal14);
+        System.out.println(bigDecimal15);
+        System.out.println();
+
+        BigDecimal bigDecimal16 = new BigDecimal(c1).setScale(3,BigDecimal.ROUND_HALF_UP);
+        BigDecimal bigDecimal17 = new BigDecimal(c2).setScale(3,BigDecimal.ROUND_HALF_UP);
+
+        System.out.println(bigDecimal16);
+        System.out.println(bigDecimal17);
+        System.out.println();
+
 
 
 
