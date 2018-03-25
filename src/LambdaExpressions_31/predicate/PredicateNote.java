@@ -1,13 +1,13 @@
 package LambdaExpressions_31.predicate;
 
-import LambdaExpressions_31.formatter.AppleFancyFormatter;
-import LambdaExpressions_31.formatter.AppleFormatter;
-import LambdaExpressions_31.formatter.AppleSimpleFormatter;
+import LambdaExpressions_31.predicate.my_predicate.AppleFancyFormatter;
+import LambdaExpressions_31.predicate.my_predicate.AppleFormatter;
+import LambdaExpressions_31.predicate.my_predicate.ApplePredicate;
+import LambdaExpressions_31.predicate.my_predicate.AppleSimpleFormatter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.Predicate;
 
 import static java.util.stream.Collectors.toList;
@@ -31,13 +31,24 @@ public interface Predicate<T> {
 
 */
 
-public class Note {
+public class PredicateNote {
 
     // The universal method
     public static <T> List<T> filterMy(List<T> list, Predicate<T> p) {
         List<T> results = new ArrayList<>();
         for (T e: list) {
             if (p.test(e)) {
+                results.add(e);
+            }
+        }
+        return results;
+    }
+
+
+    public static List<Apple> filterApple(List<Apple> list, ApplePredicate p) {
+        List<Apple> results = new ArrayList<>();
+        for (Apple e: list) {
+            if (p.testMy(e)) {
                 results.add(e);
             }
         }
@@ -62,19 +73,19 @@ public class Note {
                 new Apple("red", 250));
 
         // Applying Predicate
-        List<Apple> list =  Note.filterMy(listApples, a -> {
+        List<Apple> list =  PredicateNote.filterMy(listApples, a -> {
             return "red".equals(a.getColor());
         });
         System.out.println("Selecting only red apples: + " + list);
 
-        List<Apple> list1 =  Note.filterMy(listApples, a -> "red".equals(a.getColor()));
+        List<Apple> list1 =  PredicateNote.filterMy(listApples, a -> "red".equals(a.getColor()));
         System.out.println("Selecting only red apples: + " + list1);
 
-        List<Apple> list2 = Note.filterMy(listApples, new AppleRedPredicate());
+        List<Apple> list2 = PredicateNote.filterMy(listApples, new AppleRedPredicate());
         System.out.println("Selecting only red apples: + " + list2);
 
         // Anonymous classes
-        List<Apple> list3 =  Note.filterMy(listApples, new AppleRedPredicate() {
+        List<Apple> list3 =  PredicateNote.filterMy(listApples, new AppleRedPredicate() {
 
             @Override
             public boolean test(Apple apple) {
@@ -86,8 +97,8 @@ public class Note {
         System.out.println();
 
         // Displaying data about Object
-        Note.prettyPrintApple(listApples, new AppleFancyFormatter());
-        Note.prettyPrintApple(listApples, new AppleSimpleFormatter());
+        PredicateNote.prettyPrintApple(listApples, new AppleFancyFormatter());
+        PredicateNote.prettyPrintApple(listApples, new AppleSimpleFormatter());
         System.out.println();
 
         // Sequential processing
@@ -97,6 +108,17 @@ public class Note {
         //Parallel processing
         List<Apple> appleWeight1 = listApples.parallelStream().filter((Apple p) -> p.getWeight() > 10).collect(toList());
         System.out.println("Parallel processing: " + appleWeight1);
+        System.out.println();
+
+        //Composing Predicates
+        List<Apple> notRedApple = PredicateNote.filterMy(listApples, new AppleRedPredicate().negate());
+        System.out.println("Not red Apple: " + notRedApple);
+
+        List<Apple> notRedHeavyApple = PredicateNote.filterMy(listApples, new AppleRedPredicate().negate().and(a -> a.getWeight() < 200));
+        System.out.println("Not red and heavy Apple: " + notRedHeavyApple);
+
+        List<Apple> redAndHeavyAppleOrGreen = PredicateNote.filterMy(listApples, new AppleRedPredicate().and(a -> a.getWeight() > 200).or(a -> a.getColor().equals("green")));
+        System.out.println("Red, heavy and green Apple: " + redAndHeavyAppleOrGreen);
 
 
     }
