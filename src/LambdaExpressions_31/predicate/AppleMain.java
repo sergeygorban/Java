@@ -16,15 +16,11 @@ import static java.util.stream.Collectors.toList;
  */
 
 
-/* The word predicate is often used in mathematics to mean something function-like that takes a value
-for an argument and returns true or false.
-*/
+
 
 public class AppleMain {
 
     public static void main(String[] args) {
-
-        System.out.println(Apple.isGreenApple(new Apple("green", 151)));
 
         List<Apple> listApples = Arrays.asList(new Apple("red", 200),
                 new Apple("green", 100),
@@ -32,37 +28,6 @@ public class AppleMain {
                 new Apple("green", 250),
                 new Apple("red", 250));
 
-        System.out.println(Apple.filterApples(listApples, Apple::isGreenApple));
-        System.out.println(Apple.filterApples(listApples, (Apple p) -> "red".equals(p.getColor()) || "white".equals(p.getColor())));
-
-        // Sequential processing
-        List<Apple> appleWeight = listApples.stream().filter((Apple p) -> p.getWeight() > 10).collect(toList());
-        System.out.println(appleWeight);
-
-        //Parallel processing
-        List<Apple> appleWeight1 = listApples.parallelStream().filter((Apple p) -> p.getWeight() > 10).collect(toList());
-        System.out.println(appleWeight1);
-
-        //Predicate
-        System.out.println();
-        List<Apple> heavyApples = Apple.filterApples(listApples, new AppleHeavyWeightPredicate());
-        System.out.println(heavyApples);
-
-        List<Apple> greenApples = Apple.filterApples(listApples, new AppleGreenColorPredicate());
-        System.out.println(greenApples);
-
-        List<Apple> redApples = Apple.filterApples(listApples, new ApplePredicate() {
-
-            @Override
-            public boolean test(Apple apple) {
-                return "red".equals(apple.getColor());
-            }
-        });
-
-        List<Apple> redApplesNew = Apple.filterApples(listApples, (Apple apple) -> "red".equals(apple.getColor()));
-        System.out.println(redApples);
-        System.out.println(redApplesNew);
-        System.out.println();
 
         //Composing Predicates
         List<Apple> notRedApple = Apple.filterMy(listApples, new AppleRedPredicate().negate());
@@ -73,10 +38,6 @@ public class AppleMain {
 
         List<Apple> redAndHeavyAppleOrGreen = Apple.filterMy(listApples, new AppleRedPredicate().and(a -> a.getWeight() > 200).or(a -> a.getColor().equals("green")));
         System.out.println("Red, heavy and green Apple: " + redAndHeavyAppleOrGreen);
-
-        //Formatter
-        System.out.println();
-        Apple.prettyPrintApple(listApples, new AppleSimpleFormatter());
 
         //Creating Object. Default Constructor
         Supplier<Apple> c1 = Apple::new;

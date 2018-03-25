@@ -6,7 +6,7 @@ package LambdaExpressions_31.predicate;
 public class AppleWeightPredicate implements ApplePredicate {
 
     @Override
-    public boolean test(Apple apple) {
+    public boolean testMy(Apple apple) {
         return apple.getWeight() > 150;
     }
 

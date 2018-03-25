@@ -40,8 +40,8 @@ public class Big {
         System.out.println();
 
         //http://pr0java.blogspot.com/2015/05/biginteger-bigdecimal_70.html
-        double c1 = -23.3335;
-        double c2 = 23.3335;
+        double c1 = -23.5335;
+        double c2 = 23.5335;
 
         BigDecimal bigDecimal6 = new BigDecimal(c1).setScale(3,BigDecimal.ROUND_CEILING);
         BigDecimal bigDecimal7 = new BigDecimal(c2).setScale(3,BigDecimal.ROUND_CEILING);
@@ -78,12 +78,18 @@ public class Big {
         System.out.println(bigDecimal15);
         System.out.println();
 
-        BigDecimal bigDecimal16 = new BigDecimal(c1).setScale(3,BigDecimal.ROUND_HALF_UP);
-        BigDecimal bigDecimal17 = new BigDecimal(c2).setScale(3,BigDecimal.ROUND_HALF_UP);
 
+        double c22 = 23;
+        BigDecimal bigDecimal16 = new BigDecimal(c22).setScale(0,BigDecimal.ROUND_UNNECESSARY);
         System.out.println(bigDecimal16);
-        System.out.println(bigDecimal17);
-        System.out.println();
+
+        double c11 = -23;
+        double c211 = 12;
+        double c311 = 3;
+
+        BigDecimal bigDecimal311 = new BigDecimal(c211).setScale(3,BigDecimal.ROUND_CEILING).multiply(new BigDecimal(c311));
+        System.out.println("bigDecimal3: " + bigDecimal311);
+
 
 
 

@@ -1,6 +1,10 @@
 package LambdaExpressions_31.function;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -25,5 +29,36 @@ public class FunctionMy {
         }
 
         return result;
+    }
+
+    public static String processFile(String file) throws IOException {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+            return br.readLine();
+        }
+    }
+
+    public static String processFile(BufferedReaderProcessor p, String file) throws IOException {
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+
+            return p.process(br);
+        }
+    }
+
+    public static void main(String[] args) throws IOException {
+
+        List<Integer> list = FunctionMy.map(Arrays.asList("first", "sec", "apple"), (String s) -> s.length());
+        List<Integer> list1 = FunctionMy.map(Arrays.asList("first", "sec", "apple"), String::length);
+        System.out.println(list);
+        System.out.println(list1);
+
+
+        // Any lambdas of the form BufferedReader -> String can be passed as arguments, because they
+        // match the signature of the process method defined in the Buffered-ReaderProcessor interface.
+        String file = "readingFromFile.txt";
+        System.out.println(FunctionMy.processFile((BufferedReader br) -> br.readLine(), file));
+        System.out.println(FunctionMy.processFile((BufferedReader br) -> br.readLine() + br.readLine(), file));
     }
 }

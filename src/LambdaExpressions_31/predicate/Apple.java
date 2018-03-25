@@ -4,7 +4,6 @@ import LambdaExpressions_31.formatter.AppleFormatter;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
@@ -46,7 +45,7 @@ public class Apple {
     public static List<Apple> filterApples(List<Apple> appleList, ApplePredicate p) {
         List<Apple> result = new ArrayList<>();
         for (Apple apple: appleList) {
-            if (p.test(apple)) {
+            if (p.testMy(apple)) {
                 result.add(apple);
             }
         }

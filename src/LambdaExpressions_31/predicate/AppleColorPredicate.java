@@ -5,9 +5,8 @@ package LambdaExpressions_31.predicate;
  */
 public class AppleColorPredicate implements ApplePredicate {
 
-
     @Override
-    public boolean test(Apple apple) {
+    public boolean testMy(Apple apple) {
         return "green".equals(apple.getColor());
     }
 }
