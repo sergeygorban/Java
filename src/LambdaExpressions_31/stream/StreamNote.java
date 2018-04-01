@@ -1,9 +1,10 @@
 package LambdaExpressions_31.stream;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
+import java.lang.reflect.Array;
+import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 /**
  * Created by CC on 26.03.2018.
@@ -64,5 +65,230 @@ public class StreamNote {
                 .collect(Collectors.toList());
         System.out.println(dishes1);
         System.out.println();
+
+        // Map
+        List<String> dishNames = menu.stream()
+                .map(Dish::getName)
+                .collect(Collectors.toList());
+        System.out.println(dishNames);
+
+        List<Integer> dishNameLengths = menu.stream()
+                .map(Dish::getName)
+                .map(String::length)
+                .collect(Collectors.toList());
+        System.out.println(dishNameLengths);
+        System.out.println();
+
+        List<Integer> numbers1 = Arrays.asList(1, 2, 3, 4, 5);
+        List<Integer> squares =
+                numbers1.stream()
+                        .map(n -> n * n)
+                        .collect(Collectors.toList());
+        System.out.println("squares: " + squares);
+
+        // FlatMap
+        List<String> words = Arrays.asList("Hello","World");
+        List<String> arrayOfWords = words.stream()
+                .map(w -> w.split(""))
+                .flatMap(Arrays::stream)
+                .distinct()
+                .collect(Collectors.toList());
+        System.out.println("arrayOfWords: " + arrayOfWords);
+
+        List<Integer> number1 = Arrays.asList(1, 2, 3);
+        List<Integer> number2 = Arrays.asList(3, 4);
+        List<int[]> pairs =
+                number1.stream()
+                        .flatMap(i -> number2.stream()
+                                        .map(j -> new int[]{i, j})
+                        )
+                        .peek(a -> System.out.println("pairs: " + Arrays.toString(a)))
+                        .collect(Collectors.toList());
+
+        List<int[]> pairs1 =
+                number1.stream()
+                        .flatMap(i -> number2.stream()
+                                        .filter(j -> (i + j) % 3 == 0)
+                                        .map(j -> new int[]{i, j})
+                                        .peek(a -> System.out.println("pairs1: " + Arrays.toString(a)))
+                        )
+                        .collect(Collectors.toList());
+
+
+        // anyMatch - Checking to see if a predicate matches at least one element
+        if(menu.stream().anyMatch(Dish::isVegetarian)){
+            System.out.println("The menu is (somewhat) vegetarian friendly!!");
+        }
+
+        // allMatch - Checking to see if a predicate matches all elements
+        boolean isHealthy = menu.stream()
+                .allMatch(d -> d.getCalories() < 1000);
+        System.out.println("isHealthy: " + isHealthy);
+
+        // noneMatch
+        boolean isHealthy1 = menu.stream()
+                .noneMatch(d -> d.getCalories() >= 1000);
+        System.out.println("isHealthy1: " + isHealthy1);
+
+        // findAny - Finding an element
+        /* The Optional<T> class (java.util.Optional) is a container class to represent the existence
+           or absence of a value.
+           isPresent() returns true if Optional contains a value, false otherwise.
+            ifPresent(Consumer<T> block) executes the given block if a value is present. We introduced the
+            T get() returns the value if present; otherwise it throws a NoSuchElement-Exception.
+            T orElse(T other) returns the value if present; otherwise it returns a default value.
+        */
+        menu.stream()
+                .filter(Dish::isVegetarian)
+                .findAny()
+                .ifPresent(d -> System.out.println("getName: " + d.getName()));
+
+        // findFirst - Finding the first element
+        List<Integer> someNumbers = Arrays.asList(1, 2, 3, 4, 5);
+        Optional<Integer> firstSquareDivisibleByThree =
+                someNumbers.stream()
+                        .map(x -> x * x)
+                        .filter(x -> x % 3 == 0)
+                        .findFirst();
+        System.out.println("someNumbers: " + someNumbers);
+        System.out.println();
+
+        // reduce
+        int sum = numbers.stream().reduce(0, (a, b) -> a + b);
+        System.out.println("sum: " + sum);
+
+        // reduce. sum
+        int sum1 = numbers.stream().reduce(0, Integer::sum);
+        System.out.println("sum1: " + sum1);
+
+        // reduce. No initial value
+        Optional<Integer> sum2 = numbers.stream().reduce((a, b) -> (a + b));
+        System.out.println("sum2: " + sum2);
+
+        // reduce. max and min
+        Optional<Integer> max = numbers.stream().reduce(Integer::max);
+        System.out.println("Max: " + max);
+
+        Optional<Integer> min = numbers.stream().reduce(Integer::min);
+        System.out.println("Min: " + min);
+
+        // redice. Count
+        int count = menu.stream()
+                .map(d -> 1)
+                .reduce(0, (a, b) -> {
+
+                    System.out.println(a+b);
+                    return a + b;
+                });
+        System.out.println("Count: " + count);
+
+
+        Trader raoul = new Trader("Raoul", "Cambridge");
+        Trader mario = new Trader("Mario","Milan");
+        Trader alan = new Trader("Alan","Cambridge");
+        Trader brian = new Trader("Brian","Cambridge");
+
+        List<Transaction> transactions = Arrays.asList(
+                new Transaction(brian, 2011, 300),
+                new Transaction(raoul, 2012, 1000),
+                new Transaction(raoul, 2011, 400),
+                new Transaction(mario, 2012, 710),
+                new Transaction(mario, 2012, 700),
+                new Transaction(alan, 2012, 950)
+        );
+
+        // Find all transactions in 2011 and sort by value (small to high)
+        List<Transaction> tr2011 = transactions.stream()
+                .filter(tr -> tr.getYear() == 2011)
+                .sorted(Comparator.comparing(Transaction::getValue))
+                .collect(Collectors.toList());
+        System.out.println("tr2011: " + tr2011);
+
+        // Return a string of all traders’ names sorted alphabetically
+        String traderStr = transactions.stream()
+                .map(transaction -> transaction.getTrader().getName())
+                .distinct()
+                .sorted()
+                .reduce("", (n1, n2) -> n1 + n2);
+        System.out.println("traderStr: " + traderStr);
+
+        String traderStr1 =
+                transactions.stream()
+                        .map(transaction -> transaction.getTrader().getName())
+                        .distinct()
+                        .sorted()
+                        .collect(Collectors.joining());
+        System.out.println("traderStr1: " + traderStr1);
+
+        // Find the transaction with the smallest value
+        Optional<Transaction> smallestTransaction =
+                transactions.stream()
+                        .min(Comparator.comparing(Transaction::getValue));
+        System.out.println("smallestTransaction: " + smallestTransaction);
+
+        // Mapping to a numeric stream
+        int calories = menu.stream()
+                .mapToInt(Dish::getCalories)
+                .sum();
+        System.out.println("calories: " + calories);
+
+        OptionalInt maxCalories = menu.stream()
+                .mapToInt(Dish::getCalories)
+                .max();
+        int max1 = maxCalories.orElse(0);
+        System.out.println("maxCalories: " + maxCalories);
+
+        // Converting back to a stream of objects
+        Stream<Integer> stream = menu.stream()
+                .mapToInt(Dish::getCalories)
+                .boxed();
+        System.out.println("stream: + " + stream);
+        System.out.println();
+
+        // Numeric ranges
+        long onlyNumbers = IntStream.rangeClosed(1, 100)
+                .filter(n -> n % 2 == 0)
+                .count();
+        System.out.println("onlyNumbers: " + onlyNumbers);
+
+        long onlyNumbers1 = IntStream.range(1, 100)
+                .filter(n -> n % 2 == 0)
+                .count();
+        System.out.println("onlyNumbers1: " + onlyNumbers1);
+
+        // Generating a values
+        Stream<int[]> pythagoreanTriples =
+                IntStream.rangeClosed(1, 100).boxed()
+                        .flatMap(a -> IntStream.rangeClosed(a, 100)
+                                        .filter(b -> Math.sqrt(a*a + b*b) % 1 == 0)
+                                        .mapToObj(b ->
+                                                new int[]{a, b, (int)Math.sqrt(a * a + b * b)})
+                        );
+        System.out.println("pythagoreanTriples: " + pythagoreanTriples);
+
+        // Streams from values
+        Stream<String> streamm = Stream.of("Java 8 ", "Lambdas ", "In ", "Action");
+        streamm.map(String::toUpperCase).forEach(a -> System.out.println("streamm: " + a));
+
+        //  Streams from arrays
+        int[] num = {1,2,3,4,5,6,7,8};
+        int sum3 = Arrays.stream(num).sum();
+
+        //Streams from files
+
+        // Iterate
+        Stream.iterate(0, n -> n + 2)
+                .limit(10)
+                .forEach(System.out::println);
+
+
+
+
+
+
+
+
+
+
     }
 }
