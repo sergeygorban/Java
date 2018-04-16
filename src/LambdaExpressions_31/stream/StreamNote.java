@@ -1,6 +1,9 @@
 package LambdaExpressions_31.stream;
 
-import java.lang.reflect.Array;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -283,11 +286,11 @@ public class StreamNote {
 
 
 
+        String time = LocalDate.now().format(DateTimeFormatter.ofPattern("d-M-y"));
+        String time1 = LocalDate.now().format(DateTimeFormatter.ofPattern("d/M/y "));
 
-
-
-
-
+        String time3 = LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M/y:m"));
+        System.out.println(time3);
 
 
     }
