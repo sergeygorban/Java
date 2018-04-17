@@ -284,13 +284,53 @@ public class StreamNote {
                 .limit(10)
                 .forEach(System.out::println);
 
+        // Generate
+        Stream.generate(Math::random)
+                .limit(5)
+                .forEach(System.out::println);
+
+        // Collecting data with streams
+
+        //Map<Currency, List<Transaction>> transactionsByCurrencies =transactions.stream().collect(Collectors.groupingBy(Transaction::getCurrency));
+
+        // Counting the quantity
+        long howManyDishes = menu.stream().collect(Collectors.counting());
+        System.out.println("Counting the quantity " + howManyDishes);
+
+        // Finding maximum and minimum in a stream of values
+        Comparator<Dish> dishCaloriesComparator = Comparator.comparingInt(Dish::getCalories);
+        Optional<Dish> mostCalorieDish = menu.stream().collect(Collectors.maxBy(dishCaloriesComparator));
+        System.out.println("mostCalorieDish " + mostCalorieDish.get());
+
+        // Summarization
+        int totalCalories = menu.stream().collect(Collectors.summingInt(Dish::getCalories));
+        System.out.println("totalCalories " + totalCalories);
+
+        double avgCalories = menu.stream().collect(Collectors.averagingInt(Dish::getCalories));
+        System.out.println("avgCalories " + avgCalories);
+
+        IntSummaryStatistics menuStatistics = menu.stream().collect(Collectors.summarizingInt(Dish::getCalories));
+        System.out.println("menuStatistics " + menuStatistics);
+
+        // Joining Strings
+        String shortMenu = menu.stream().map(Dish::getName).collect(Collectors.joining());
+        System.out.println("shortMenu " + shortMenu);
+
+        String shortMenu1 = menu.stream().map(Dish::getName).collect(Collectors.joining(", "));
+        System.out.println("shortMenu1 " + shortMenu1);
+
+        // Generalized summarization with reduction
+        int totalCalories1 = menu.stream().collect(Collectors.reducing(0, Dish::getCalories, (i, j) -> i + j));
+        System.out.println("totalCalories1 " + totalCalories1);
+
+        Optional<Dish> mostCalorieDish1 =
+                menu.stream().collect(Collectors.reducing(
+                        (d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2));
+        System.out.println("mostCalorieDish1 " + mostCalorieDish1.get());
 
 
-        String time = LocalDate.now().format(DateTimeFormatter.ofPattern("d-M-y"));
-        String time1 = LocalDate.now().format(DateTimeFormatter.ofPattern("d/M/y "));
 
-        String time3 = LocalDateTime.now().format(DateTimeFormatter.ofPattern("d/M/y:m"));
-        System.out.println(time3);
+
 
 
     }
