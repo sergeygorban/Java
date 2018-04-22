@@ -15,12 +15,13 @@ import java.util.stream.Stream;
 
 /*Stream is a sequence of elements from a source that supports data processing operations
 
-
+https://github.com/java8/Java8InAction/blob/master/src/main/java/lambdasinaction/chap6/Grouping.java
 
 
 */
 public class StreamNote {
 
+    public enum CaloricLevel { DIET, NORMAL, FAT }
 
     public static void main(String[] args) {
 
@@ -90,7 +91,7 @@ public class StreamNote {
         System.out.println("squares: " + squares);
 
         // FlatMap
-        List<String> words = Arrays.asList("Hello","World");
+        List<String> words = Arrays.asList("Hello", "World");
         List<String> arrayOfWords = words.stream()
                 .map(w -> w.split(""))
                 .flatMap(Arrays::stream)
@@ -119,7 +120,7 @@ public class StreamNote {
 
 
         // anyMatch - Checking to see if a predicate matches at least one element
-        if(menu.stream().anyMatch(Dish::isVegetarian)){
+        if (menu.stream().anyMatch(Dish::isVegetarian)) {
             System.out.println("The menu is (somewhat) vegetarian friendly!!");
         }
 
@@ -180,16 +181,16 @@ public class StreamNote {
                 .map(d -> 1)
                 .reduce(0, (a, b) -> {
 
-                    System.out.println(a+b);
+                    System.out.println(a + b);
                     return a + b;
                 });
         System.out.println("Count: " + count);
 
 
         Trader raoul = new Trader("Raoul", "Cambridge");
-        Trader mario = new Trader("Mario","Milan");
-        Trader alan = new Trader("Alan","Cambridge");
-        Trader brian = new Trader("Brian","Cambridge");
+        Trader mario = new Trader("Mario", "Milan");
+        Trader alan = new Trader("Alan", "Cambridge");
+        Trader brian = new Trader("Brian", "Cambridge");
 
         List<Transaction> transactions = Arrays.asList(
                 new Transaction(brian, 2011, 300),
@@ -263,9 +264,9 @@ public class StreamNote {
         Stream<int[]> pythagoreanTriples =
                 IntStream.rangeClosed(1, 100).boxed()
                         .flatMap(a -> IntStream.rangeClosed(a, 100)
-                                        .filter(b -> Math.sqrt(a*a + b*b) % 1 == 0)
+                                        .filter(b -> Math.sqrt(a * a + b * b) % 1 == 0)
                                         .mapToObj(b ->
-                                                new int[]{a, b, (int)Math.sqrt(a * a + b * b)})
+                                                new int[]{a, b, (int) Math.sqrt(a * a + b * b)})
                         );
         System.out.println("pythagoreanTriples: " + pythagoreanTriples);
 
@@ -274,7 +275,7 @@ public class StreamNote {
         streamm.map(String::toUpperCase).forEach(a -> System.out.println("streamm: " + a));
 
         //  Streams from arrays
-        int[] num = {1,2,3,4,5,6,7,8};
+        int[] num = {1, 2, 3, 4, 5, 6, 7, 8};
         int sum3 = Arrays.stream(num).sum();
 
         //Streams from files
@@ -290,8 +291,6 @@ public class StreamNote {
                 .forEach(System.out::println);
 
         // Collecting data with streams
-
-        //Map<Currency, List<Transaction>> transactionsByCurrencies =transactions.stream().collect(Collectors.groupingBy(Transaction::getCurrency));
 
         // Counting the quantity
         long howManyDishes = menu.stream().collect(Collectors.counting());
@@ -319,9 +318,12 @@ public class StreamNote {
         String shortMenu1 = menu.stream().map(Dish::getName).collect(Collectors.joining(", "));
         System.out.println("shortMenu1 " + shortMenu1);
 
+        String shortMenu2 = menu.stream().map(Dish::getName).collect(Collectors.reducing((s1, s2) -> s1 + s2)).get();
+        System.out.println("shortMenu2 " + shortMenu2);
+
         // Generalized summarization with reduction
-        int totalCalories1 = menu.stream().collect(Collectors.reducing(0, Dish::getCalories, (i, j) -> i + j));
-        System.out.println("totalCalories1 " + totalCalories1);
+        int totalCalories2 = menu.stream().collect(Collectors.reducing(0, Dish::getCalories, (i, j) -> i + j));
+        System.out.println("totalCalories2 " + totalCalories2);
 
         Optional<Dish> mostCalorieDish1 =
                 menu.stream().collect(Collectors.reducing(
@@ -329,9 +331,57 @@ public class StreamNote {
         System.out.println("mostCalorieDish1 " + mostCalorieDish1.get());
 
 
+        int totalCalories1 = menu.stream().collect(Collectors.reducing(0, Dish::getCalories, Integer::sum));
+        System.out.println("totalCalories1 " + totalCalories1);
+
+        int totalCalories3 = menu.stream().map(Dish::getCalories).reduce(Integer::sum).get();
+        System.out.println("totalCalories3 " + totalCalories3);
+
+        int totalCalories4 = menu.stream().mapToInt(Dish::getCalories).sum();
+        System.out.println("totalCalories4 " + totalCalories4);
 
 
+        // Grouping
+        Map<Dish.Type, List<Dish>> dishesByType = menu.stream().collect(Collectors.groupingBy(Dish::getType));
+        System.out.println("dishesByType " + dishesByType);
+
+        Map<CaloricLevel, List<Dish>> dishesByCaloricLevel = menu.stream().collect(Collectors.groupingBy(dish -> {
+            if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+            else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+            else return CaloricLevel.FAT;
+        }));
+
+        System.out.println("dishesByCaloricLevel " + dishesByCaloricLevel);
+
+
+        // Multilevel grouping
+        Map<Dish.Type, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel1 =
+            menu.stream().collect(
+                    Collectors.groupingBy(Dish::getType,
+                            Collectors.groupingBy((Dish dish) -> {
+                                if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+                                else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+                                else return CaloricLevel.FAT;
+                            })
+                    )
+            );
+
+        System.out.println("dishesByTypeCaloricLevel1 " + dishesByTypeCaloricLevel1);
 
 
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
