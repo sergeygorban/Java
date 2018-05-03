@@ -208,7 +208,7 @@ public class StreamNote {
                 .collect(Collectors.toList());
         System.out.println("tr2011: " + tr2011);
 
-        // Return a string of all traders’ names sorted alphabetically
+        // Return a string of all tradersï¿½ names sorted alphabetically
         String traderStr = transactions.stream()
                 .map(transaction -> transaction.getTrader().getName())
                 .distinct()
@@ -367,6 +367,7 @@ public class StreamNote {
             );
 
         System.out.println("dishesByTypeCaloricLevel1 " + dishesByTypeCaloricLevel1);
+        System.out.println();
 
 
     }
