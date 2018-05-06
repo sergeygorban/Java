@@ -1,12 +1,13 @@
 package mail;
 
+
 import javax.activation.DataHandler;
 import javax.activation.FileDataSource;
-import javax.mail.*;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeBodyPart;
-import javax.mail.internet.MimeMessage;
-import javax.mail.internet.MimeMultipart;
+//import javax.mail.*;
+//import javax.mail.internet.InternetAddress;
+//import javax.mail.internet.MimeBodyPart;
+//import javax.mail.internet.MimeMessage;
+//import javax.mail.internet.MimeMultipart;
 import java.io.File;
 import java.util.Properties;
 
@@ -17,6 +18,7 @@ import java.util.Properties;
 
 public class SendEmail {
 
+    /*
     private String host = "smtp.gmail.com";
     private String port = "587";
     private String username = "sergey.gorban.cc@gmail.com";
@@ -75,4 +77,6 @@ public class SendEmail {
 
 
     }
+*/
 }
+
