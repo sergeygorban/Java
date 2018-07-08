@@ -2,7 +2,7 @@ package generics_11;
 
 public class Note {
 
-    public <T extends AbstractTable> List<T> getTable (WebElement table, Class<T> t){
+/*    public <T extends AbstractTable> List<T> getTable (WebElement table, Class<T> t){
         List<T> r = new ArrayList<T>();
         try{
             List<WebElement> wrp = table.findElements(By.tagName("tr"));
@@ -14,5 +14,5 @@ public class Note {
 
         }
         return r;
-    }
+    }*/
 }

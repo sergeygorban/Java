@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
@@ -290,7 +291,12 @@ public class StreamNote {
         // Generate
         Stream.generate(Math::random)
                 .limit(5)
-                .forEach(System.out::println);
+                .forEach(System.out::println);            
+
+        List<String> columnNames = List.of("A", "B", "C");
+        Map<String, Integer> columns = IntStream.range(0, columnNames.size())
+                .boxed()
+                .collect(Collectors.toMap(columnNames::get, Function.identity()));
 
         // Collecting data with streams
 
