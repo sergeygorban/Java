@@ -291,7 +291,7 @@ public class StreamNote {
         // Generate
         Stream.generate(Math::random)
                 .limit(5)
-                .forEach(System.out::println);            
+                .forEach(System.out::println);
 
         List<String> columnNames = List.of("A", "B", "C");
         Map<String, Integer> columns = IntStream.range(0, columnNames.size())
